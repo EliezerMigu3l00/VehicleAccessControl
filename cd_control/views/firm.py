@@ -1,24 +1,32 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from cd_control.models.firm import Firm
+from django.views import View
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from cd_control.models import Firm
 
 
-class FirmListView(ListView):
-    model = Firm
+class FirmView(View):
+    def get(self, request):
+        name = Firm.objects.all()
+        cnpj = Firm.objects.all()
 
+        context = {
+            'name': name,
+            'cnpj': cnpj,
+        }
 
-class FirmCreateView(CreateView):
-    model = Firm
-    fields = ["name", "cnpj"]
-    success_url = reverse_lazy("firm_list")
+        return render(request, 'cd_control/firm.html', context)
 
+    def post(self, request):
+        name = request.POST.get('name')
+        cnpj = request.POST.get('cnpj')
 
-class FirmUpdateView(UpdateView):
-    model = Firm
-    fields = ["name", "cnpj"]
-    success_url = reverse_lazy("firm_list")
-
-
-class FirmDeleteView(DeleteView):
-    model = Firm
-    success_url = reverse_lazy("firm_list")
+        try:
+            Firm.objects.create(
+                name=name,
+                cnpj=cnpj
+            )
+            messages.success(request, "Empresa criada com sucesso!")
+            return redirect('firm')
+        except Exception as e:
+            messages.error(request, f"Erro ao criar empresa: {e}")
+            return redirect('firm')

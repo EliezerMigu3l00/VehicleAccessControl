@@ -1,24 +1,23 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from cd_control.models.product_type import ProductType
+from django.views import View
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from cd_control.models import ProductType
 
 
-class ProductTypeListView(ListView):
-    model = ProductType
+class ProductTypeView(View):
+    def get(self, request):
+        product_types = ProductType.objects.all()
+        context = {
+            'product_types': product_types,
+        }
+        return render(request, 'cd_control/product_type.html', context)
 
-
-class ProductTypeCreateView(CreateView):
-    model = ProductType
-    fields = ["name"]
-    success_url = reverse_lazy("product_type_list")
-
-
-class ProductTypeUpdateView(UpdateView):
-    model = ProductType
-    fields = ["name"]
-    success_url = reverse_lazy("product_type_list")
-
-
-class ProductTypeDeleteView(DeleteView):
-    model = ProductType
-    success_url = reverse_lazy("product_type_list")
+    def post(self, request):
+        name = request.POST.get('name')
+        try:
+            ProductType.objects.create(name=name)
+            messages.success(request, "Tipo de produto criado com sucesso!")
+            return redirect('product_type')
+        except Exception as e:
+            messages.error(request, f"Erro ao criar tipo de produto: {e}")
+            return redirect('product_type')
