@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <h1>Cadastro de Motoristas</h1>
+    <button
+      onclick="document.getElementById('entryModal').style.display='block'"
+    >
+      Cadastrar Motorista
+    </button>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>RG</th>
+          <th>CNH</th>
+          <th>Telefone</th>
+          <th>Transportadora</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for driver in drivers %}
+        <tr>
+          <td>{{ driver.name }}</td>
+          <td>{{ driver.cpf }}</td>
+          <td>{{ driver.rg }}</td>
+          <td>{{ driver.cnh }}</td>
+          <td>{{ driver.phone }}</td>
+          <td>{{ driver.firm }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div
+      id="entryModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          margin: 5% auto;
+          padding: 20px;
+          width: 50%;
+          position: relative;
+        "
+      >
+        <span
+          onclick="document.getElementById('entryModal').style.display='none'"
+          style="position: absolute; top: 10px; right: 15px; cursor: pointer"
+          >&times;</span
+        >
+
+        <h2>Cadastrar Motorista</h2>
+        <form method="post">
+          {% csrf_token %}
+          <label>Nome:</label>
+          <input type="text" name="name" required /><br />
+
+          <label>CPF:</label>
+          <input type="text" name="cpf" required /><br />
+
+          <label>RG:</label>
+          <input type="text" name="rg" required /><br />
+
+          <label>CNH:</label>
+          <input type="text" name="cnh" required /><br />
+
+          <label>Telefone:</label>
+          <input type="text" name="phone" required /><br />
+
+          <label>Transportadora:</label>
+          <select name="firm" required>
+            {% for firm in firms %}
+            <option value="{{ firm.id }}">{{ firm }}</option>
+            {% endfor %}</select
+          ><br />
+
+          <button type="submit">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li
+        style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %};"
+      >
+        {{ message }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>

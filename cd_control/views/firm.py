@@ -14,7 +14,7 @@ class FirmView(View):
             'cnpj': cnpj,
         }
 
-        return render(request, 'cd_control/firm.html', context)
+        return render(request, 'cd_control/support_function.html', context)
 
     def post(self, request):
         name = request.POST.get('name')

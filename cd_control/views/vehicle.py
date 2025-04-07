@@ -6,16 +6,14 @@ from cd_control.models import Vehicle, VehicleType, Firm
 
 class VehicleView(View):
     def get(self, request):
-        vehicle_plate = Vehicle.objects.all()
-        cart_plate = Vehicle.objects.all()
-        vehicle_type = VehicleType.objects.all()
-        firm = Firm.objects.all()
+        vehicles = Vehicle.objects.all()
+        vehicle_types = VehicleType.objects.all()
+        firms = Firm.objects.all()
 
         context = {
-            'vehicle_plate': vehicle_plate,
-            'cart_plate': cart_plate,
-            'vehicle_type': vehicle_type,
-            'firm': firm,
+            'vehicles': vehicles,
+            'vehicle_types': vehicle_types,
+            'firms': firms,
         }
 
         return render(request, 'cd_control/vehicle.html', context)

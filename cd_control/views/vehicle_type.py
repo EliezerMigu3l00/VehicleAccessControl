@@ -6,11 +6,11 @@ from cd_control.models import VehicleType
 
 class VehicleTypeView(View):
     def get(self, request):
-        name = VehicleType.objects.all()
+        vehicle_types = VehicleType.objects.all()
         context = {
-            'name': name,
+            'vehicle_types': vehicle_types,
         }
-        return render(request, 'cd_control/vehicle_type.html', context)
+        return render(request, 'cd_control/support_function.html', context)
 
     def post(self, request):
         name = request.POST.get('name')

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Funções e Suporte</title>
+</head>
+<body>
+    <h1>Funções e Suporte</h1>
+
+    <button onclick="document.getElementById('firmModal').style.display='block'">
+        Cadastrar Transportadora/Empresa
+    </button>
+    <button onclick="document.getElementById('productModal').style.display='block'">
+        Cadastrar Produto
+    </button>
+    <button onclick="document.getElementById('vehicleTypeModal').style.display='block'">
+        Cadastrar Tipo de Veículo
+    </button>
+
+    <div id="firmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+        <div style="background:#fff; margin:5% auto; padding:20px; width:50%; position:relative;">
+            <span onclick="document.getElementById('firmModal').style.display='none'">&times;</span>
+            <h2>Cadastrar Empresa / Transportadora</h2>
+            <form method="post" action="{% url 'firm' %}">
+                {% csrf_token %}
+                <label>Nome da Empresa:</label>
+                <input type="text" name="name" required><br><br>
+                <label>CNPJ:</label>
+                <input type="text" name="cnpj" required><br><br>
+                <button type="submit">Cadastrar Empresa</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="productModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+        <div style="background:#fff; margin:5% auto; padding:20px; width:50%; position:relative;">
+            <span onclick="document.getElementById('productModal').style.display='none'">&times;</span>
+            <h2>Cadastrar Tipo de Produto</h2>
+            <form method="post" action="{% url 'product_type' %}">
+                {% csrf_token %}
+                <label>Nome do Produto:</label>
+                <input type="text" name="name" required><br><br>
+                <button type="submit">Cadastrar Produto</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="vehicleTypeModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+        <div style="background:#fff; margin:5% auto; padding:20px; width:50%; position:relative;">
+            <span onclick="document.getElementById('vehicleTypeModal').style.display='none'">&times;</span>
+            <h2>Cadastrar Tipo de Veiculo</h2>
+            <form method="post" action="{% url 'vehicle_type' %}">
+                {% csrf_token %}
+                <label>Tipo do Veiculo:</label>
+                <input type="text" name="name" required><br><br>
+                <button type="submit">Cadastrar Tipo do Veiculo</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

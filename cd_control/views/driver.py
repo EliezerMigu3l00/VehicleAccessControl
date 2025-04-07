@@ -6,20 +6,12 @@ from cd_control.models import Firm, Driver
 
 class DriverView(View):
     def get(self, request):
-        name = Driver.objects.all()
-        cpf = Driver.objects.all() 
-        rg = Driver.objects.all()
-        cnh = Driver.objects.all()
-        phone = Driver.objects.all()
-        firm = Firm.objects.all()
+        drivers = Driver.objects.all()
+        firms = Firm.objects.all()
 
         context = {
-            'name': name,
-            'cpf': cpf,
-            'rg': rg,
-            'cnh': cnh,
-            'phone': phone,
-            'firm': firm,
+            'drivers': drivers,
+            'firms': firms,
         }
 
         return render(request, 'cd_control/driver.html', context)
@@ -42,7 +34,6 @@ class DriverView(View):
                 firm=Firm.objects.get(id=firm_id)
             )
             messages.success(request, "Motorista criado com sucesso!")
-            return redirect('driver')
         except Exception as e:
             messages.error(request, f"Erro ao cadastrar motorista: {e}")
-            return redirect('driver')
+        return redirect('driver')

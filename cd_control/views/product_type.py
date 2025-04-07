@@ -10,7 +10,7 @@ class ProductTypeView(View):
         context = {
             'product_types': product_types,
         }
-        return render(request, 'cd_control/product_type.html', context)
+        return render(request, 'cd_control/support_function.html', context)
 
     def post(self, request):
         name = request.POST.get('name')
